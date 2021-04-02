@@ -1,0 +1,12 @@
+.upload {
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 500px;
+}
+
+.upload img {
+    /* border: solid; */
+    height: 100px;
+    margin: 20px;
+    margin-bottom: 50px;
+}

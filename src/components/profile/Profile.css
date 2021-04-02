@@ -1,0 +1,26 @@
+/* main section */
+
+.user {
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.user img {
+    height: 200px;
+}
+
+.images {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.images .image-container {
+    margin-bottom: 10px;
+}
+
+.images .image-container img {
+    height: 300px;
+    width: 300px;
+}

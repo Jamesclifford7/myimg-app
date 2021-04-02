@@ -1,0 +1,16 @@
+/* main */
+
+.image {
+    margin: 0 auto;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.image button {
+    margin: 50px;
+}
+
+.image img {
+    height: 700px;
+    width: 700px;
+}

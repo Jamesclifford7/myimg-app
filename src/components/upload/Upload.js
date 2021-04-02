@@ -2,10 +2,10 @@ import React from 'react';
 import Header from '../header/Header';
 import '../upload/Upload.css'; 
 
-function Upload() {
+function Upload(props) {
     return (
         <>
-            <Header />
+            <Header {...props} user={props.user} handleLogout={event => props.handleLogout(event)} />
             <main>
                 <section class="upload">
                     <h1>Upload New Image</h1>

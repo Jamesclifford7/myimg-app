@@ -2,10 +2,10 @@ import React from 'react';
 import Header from '../header/Header'
 import '../landing/Landing.css'
 
-function Landing() {
+function Landing(props) {
     return (
         <>
-            <Header />
+            <Header user={props.user} />
             <main>
                 <section className="main">
                     <h1>MyImg</h1>

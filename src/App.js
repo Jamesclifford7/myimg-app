@@ -35,6 +35,15 @@ class App extends React.Component {
     }; 
   }
 
+  handleLogout = (event) => {
+    event.preventDefault(); 
+    this.setState({
+      user: {}, 
+      images: []
+    }); 
+    this.props.history.push('/')
+  }
+
 
   render() {
     return (
@@ -50,22 +59,22 @@ class App extends React.Component {
           <Route 
           path="/profile"
           render={(props) => (
-            <Profile {...props} images={this.state.images} user={this.state.user} />
+            <Profile {...props} images={this.state.images} user={this.state.user} handleLogout={this.handleLogout} />
           )}/>
           <Route 
           path="/image/:id"
           render={(props) => (
-            <Image {...props} images={this.state.images} user={this.state.user} />
+            <Image {...props} images={this.state.images} user={this.state.user} handleLogout={this.handleLogout} />
           )}/>
           <Route 
           path="/editprofile"
           render={(props) => (
-            <Editprofile {...props} images={this.state.images} user={this.state.user} />
+            <Editprofile {...props} images={this.state.images} user={this.state.user} handleLogout={this.handleLogout} />
           )}/>
           <Route 
           path="/upload"
           render={(props) => (
-            <Upload {...props} images={this.state.images} user={this.state.user} />
+            <Upload {...props} images={this.state.images} user={this.state.user} handleLogout={this.handleLogout} />
           )}/>
       </div>
     );

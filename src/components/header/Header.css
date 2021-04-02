@@ -11,10 +11,38 @@ header nav ul {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-
+    /* position: relative; */
 }
 
 header nav ul li {
     list-style-type: none;
     margin-right: 70px;
+}
+
+header nav ul .dropdown {
+    margin-right: -20px; 
+    position: fixed;
+    border: solid; 
+    padding: 0;
+    margin-top: 52px;
+    height: 100%;
+    width: 30%;
+    background-color: antiquewhite;
+    /* padding-right: 100px; */
+}
+
+header nav ul .dropdown .dropdown-container {
+    text-align: left;
+}
+
+
+
+header nav ul .dropdown .dropdown-container button {
+    display: block;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+header nav ul li img {
+    height: 25px;
 }

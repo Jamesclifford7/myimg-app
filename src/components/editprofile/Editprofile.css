@@ -14,12 +14,24 @@
     flex-wrap: wrap;
 }
 
-.images .image-container {
+.images .image-container-delete {
     margin-bottom: 10px;
+    /* position: relative; */
 }
 
-.images .images-container img {
+.images .image-container-delete img {
     height: 300px;
     width: 300px;
+    /* margin: 20px; */
+}
+
+.images .image-container-delete button {
+    display: block;
+    /* position: absolute; */
+    /* margin: 10px; */
+}
+
+.images .image-container-delete img:hover {
+    opacity: 0.5;
 }
 

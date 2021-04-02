@@ -7,10 +7,10 @@ function Profile(props) {
     console.log(props.images)
     return (
         <>
-            <Header />
+            <Header {...props} user={props.user} handleLogout={props.handleLogout} />
             <main>
                 <section class="user">
-                    <img src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" alt="user icon" />
+                    <img src={props.user.profile_img} alt="user icon" />
                     <h2>username</h2>
                 </section>
                 <section class="images">

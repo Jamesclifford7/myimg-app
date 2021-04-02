@@ -8,7 +8,7 @@ function Image(props) {
 
     return (
         <>
-            <Header />
+            <Header user={props.user} handleLogout={event => props.handleLogout(event)}/>
             <main>
                 <section class="image">
                     <button onClick={event => props.history.goBack(event)}>Back</button><br/>

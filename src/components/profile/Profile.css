@@ -24,3 +24,7 @@
     height: 300px;
     width: 300px;
 }
+
+.images .image-container img:hover {
+    opacity: 0.5;
+}

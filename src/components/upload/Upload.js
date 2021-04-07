@@ -10,7 +10,10 @@ function Upload(props) {
                 <section class="upload">
                     <h1>Upload New Image</h1>
                     <img src="https://image.flaticon.com/icons/png/512/23/23714.png" /><br/>
-                    <button>Choose File</button>
+                    <form onSubmit={event => props.handleUpload(event)}>
+                        <input type="file" id="profileImg" />
+                        <input type="submit" />
+                    </form>
                 </section>
             </main>
             <footer>
@@ -21,3 +24,9 @@ function Upload(props) {
 }
 
 export default Upload
+
+{/* <section class="upload">
+    <h1>Upload New Image</h1>
+    <img src="https://image.flaticon.com/icons/png/512/23/23714.png" /><br/>
+    <button>Choose File</button>
+</section> */}

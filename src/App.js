@@ -19,6 +19,7 @@ class App extends React.Component {
     }
   }
 
+  // login handler 
   handleLogin = (event) => {
     event.preventDefault(); 
     // retrieve user info and validate it
@@ -29,12 +30,14 @@ class App extends React.Component {
         user: user, 
         images: user_images
       }); 
-      this.props.history.push('/profile');
+      // this.props.history.push('/profile');
+      this.props.history.push(`/profile/${user.username}`)
     } else {
       alert('username/password not found');
     }; 
   }
 
+  // logout handler
   handleLogout = (event) => {
     event.preventDefault(); 
     this.setState({
@@ -44,8 +47,27 @@ class App extends React.Component {
     this.props.history.push('/')
   }
 
+  // upload handler
+  handleUpload = (event) => {
+    event.preventDefault(); 
+    const newFile = event.target.profileImg.value; 
+    const newFileArr = newFile.split('')
+    newFileArr.splice(0, 11); 
+    const img = newFileArr.join('')
+    const newImg = {
+      id: 7, 
+      owner_img: 1, 
+      file: img
+    }
+    this.setState({
+      images: [...this.state.images, newImg]
+    })
+    this.props.history.push(`/profile/${this.state.user.username}`)
+    // console.log(newFileArr.join(''))
+  }
 
   render() {
+    console.log(this.state.images)
     return (
       <div className="App">
           <Route 
@@ -57,7 +79,7 @@ class App extends React.Component {
             <Login {...props} handleLogin={this.handleLogin} />
           )}/>
           <Route 
-          path="/profile"
+          path="/profile/:username"
           render={(props) => (
             <Profile {...props} images={this.state.images} user={this.state.user} handleLogout={this.handleLogout} />
           )}/>
@@ -74,7 +96,7 @@ class App extends React.Component {
           <Route 
           path="/upload"
           render={(props) => (
-            <Upload {...props} images={this.state.images} user={this.state.user} handleLogout={this.handleLogout} />
+            <Upload {...props} images={this.state.images} user={this.state.user} handleLogout={this.handleLogout} handleUpload={this.handleUpload} />
           )}/>
       </div>
     );

@@ -20,7 +20,7 @@ function Profile(props) {
                             return <div class="image-container" key={idx}>
                                         <Link to={`/image/${img.id}`}><img src={img.file}  /></Link>
                                     </div>
-                        })
+                        }).reverse()
                     }
                 </section>
             </main>

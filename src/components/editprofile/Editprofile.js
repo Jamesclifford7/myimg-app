@@ -16,11 +16,11 @@ function Editprofile(props) {
                 <section class="images">
                     {
                         props.images.map((img, idx) => {
-                            return <div class="image-container-delete" key={idx}>
+                            return <div class="image-container-delete" key={idx} id={img.id}>
                                         <img src={img.file}  />
-                                        <button>Delete</button>
+                                        <button onClick={event => props.handleDeleteImage(event)}>Delete</button>
                                     </div>
-                        })
+                        }).reverse()
                     }
                 </section>
             </main>

@@ -6,7 +6,8 @@ const user = {
     name: "Andy Warhol", 
     username: "a_warhol", 
     password: "Warholandy1", 
-    profile_img: icon
+    profile_img: icon, 
 }
 
 export default user;
+

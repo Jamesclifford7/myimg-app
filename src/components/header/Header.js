@@ -21,7 +21,7 @@ class Header extends React.Component {
         this.setState({
             showMenu: false
         }); 
-        this.props.history.push('/profile'); 
+        this.props.history.push(`/profile/${this.props.user.username}`); 
     }
 
     handleUpload = (event) => {

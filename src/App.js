@@ -15,7 +15,8 @@ class App extends React.Component {
     super(); 
     this.state = {
       user: {}, 
-      images: []
+      images: [], 
+      selectedFile: null
     }
   }
 
@@ -42,32 +43,52 @@ class App extends React.Component {
     event.preventDefault(); 
     this.setState({
       user: {}, 
-      images: []
+      images: [], 
+      selectedFile: null
     }); 
     this.props.history.push('/')
+  }
+
+  onChangeHandler = (event) => {
+    this.setState({
+      selectedFile: URL.createObjectURL(event.target.files[0]), 
+    });
   }
 
   // upload handler
   handleUpload = (event) => {
     event.preventDefault(); 
-    const newFile = event.target.profileImg.value; 
-    const newFileArr = newFile.split('')
-    newFileArr.splice(0, 11); 
-    const img = newFileArr.join('')
+    console.log(this.state.selectedFile)
+    const file = this.state.selectedFile; 
     const newImg = {
       id: 7, 
-      owner_img: 1, 
-      file: img
-    }
+      owner_id: 1, 
+      file: file
+    };
     this.setState({
-      images: [...this.state.images, newImg]
+      images: [...this.state.images, newImg], 
+      selectedFile: null
+    }); 
+    this.props.history.push(`/profile/${this.state.user.username}`);
+  }
+
+  handleDeleteImage = (event) => {
+    event.preventDefault(); 
+    // console.log(typeof parseInt(event.target.parentNode.id))
+    const imgId = parseInt(event.target.parentNode.id); 
+    const imgIdx = this.state.images.findIndex(img => {
+      return img.id === imgId
+    }); 
+    const updatedImages = this.state.images; 
+    updatedImages.splice(imgIdx, 1); 
+    this.setState({
+      images: updatedImages
     })
-    this.props.history.push(`/profile/${this.state.user.username}`)
-    // console.log(newFileArr.join(''))
   }
 
   render() {
-    console.log(this.state.images)
+    // console.log(this.state.selectedFile)
+    // console.log(this.state.images)
     return (
       <div className="App">
           <Route 
@@ -91,12 +112,12 @@ class App extends React.Component {
           <Route 
           path="/editprofile"
           render={(props) => (
-            <Editprofile {...props} images={this.state.images} user={this.state.user} handleLogout={this.handleLogout} />
+            <Editprofile {...props} images={this.state.images} user={this.state.user} handleLogout={this.handleLogout} handleDeleteImage={this.handleDeleteImage} />
           )}/>
           <Route 
           path="/upload"
           render={(props) => (
-            <Upload {...props} images={this.state.images} user={this.state.user} handleLogout={this.handleLogout} handleUpload={this.handleUpload} />
+            <Upload {...props} images={this.state.images} user={this.state.user} onChangeHandler={this.onChangeHandler} handleLogout={this.handleLogout} handleUpload={this.handleUpload} />
           )}/>
       </div>
     );

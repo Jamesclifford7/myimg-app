@@ -8,7 +8,7 @@ import Image from './components/image/Image';
 import Editprofile from './components/editprofile/Editprofile';
 import Upload from './components/upload/Upload';
 import user from './user';
-import user_images from './user_images'; 
+// import user_images from './user_images'; 
 import firebase from "firebase/app";
 import 'firebase/storage'; 
 
@@ -31,7 +31,6 @@ class App extends React.Component {
     super(); 
     this.state = {
       user: {}, 
-      images: [], 
       selectedFile: null
     }
   }
@@ -45,7 +44,6 @@ class App extends React.Component {
     if ((input === user.email || input === user.username) && password === user.password) {
       this.setState({
         user: user, 
-        images: user_images
       }); 
       // this.props.history.push('/profile');
       this.props.history.push(`/profile/${user.username}`)

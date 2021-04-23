@@ -7,14 +7,14 @@ function Login(props) {
         <>
             <Header />
             <main>
-                <section class="login">
-                    <div class="form-container">
+                <section className="login">
+                    <div className="form-container">
                         <h1>Login</h1>
                         <form onSubmit={e => props.handleLogin(e)}>
-                            <div class="input-container">
-                                <label for="input">Username/Email:</label>
+                            <div className="input-container">
+                                <label htmlFor="input">Username/Email:</label>
                                 <input id="input" type="text" /><br/>
-                                <label for="password">Password:</label>
+                                <label htmlFor="password">Password:</label>
                                 <input id="password" type="password" /><br/>
                             </div>
                             <button type="submit">Login</button>

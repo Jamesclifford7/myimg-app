@@ -8,7 +8,23 @@ import Image from './components/image/Image';
 import Editprofile from './components/editprofile/Editprofile';
 import Upload from './components/upload/Upload';
 import user from './user';
-import user_images from './user_images'
+import user_images from './user_images'; 
+import firebase from "firebase/app";
+import 'firebase/storage'; 
+
+var config = {
+  apiKey: "AIzaSyAN595HmOigQEoVtvo-_Fwb8tHkA_sACXE",
+  authDomain: "myimg-1cc76.firebaseapp.com",
+  projectId: "myimg-1cc76",
+  storageBucket: "myimg-1cc76.appspot.com",
+  messagingSenderId: "789867076628",
+  appId: "1:789867076628:web:945eca52cd13dcc4cc5b01",
+  measurementId: "G-DB10S53E3J"
+};
+// Initialize Firebase
+firebase.initializeApp(config);
+// var storage = firebase.storage(); 
+// firebase.analytics();
 
 class App extends React.Component {
   constructor() {
@@ -50,25 +66,44 @@ class App extends React.Component {
   }
 
   onChangeHandler = (event) => {
+    // this.setState({
+    //   selectedFile: URL.createObjectURL(event.target.files[0]), 
+    // });
+    const file = event.target.files[0]; 
     this.setState({
-      selectedFile: URL.createObjectURL(event.target.files[0]), 
-    });
+      selectedFile: file
+    })
   }
-
+  
   // upload handler
   handleUpload = (event) => {
     event.preventDefault(); 
-    console.log(this.state.selectedFile)
-    const file = this.state.selectedFile; 
-    const newImg = {
-      id: 7, 
-      owner_id: 1, 
-      file: file
-    };
-    this.setState({
-      images: [...this.state.images, newImg], 
-      selectedFile: null
-    }); 
+    const file = this.state.selectedFile;
+    const folder = toString(this.state.user.id); 
+    console.log(this.state.user.username)
+    // create a root reference
+    var storageRef = firebase.storage().ref();
+
+    // create a reference to the image
+
+    var imgRef = storageRef.child(`${this.state.user.username}/${file.name}`); 
+
+    imgRef.put(file)    
+      .then(snapshot => {
+        console.log('uploaded')
+      })
+
+    // console.log(this.state.selectedFile)
+    // const file = this.state.selectedFile; 
+    // const newImg = {
+    //   id: 7, 
+    //   owner_id: 1, 
+    //   file: file
+    // };
+    // this.setState({
+    //   images: [...this.state.images, newImg], 
+    //   selectedFile: null
+    // }); 
     this.props.history.push(`/profile/${this.state.user.username}`);
   }
 

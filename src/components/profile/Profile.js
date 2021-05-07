@@ -14,22 +14,17 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
-        var storage = firebase.storage();
+        var storage = firebase.storage(); 
 
-        // var gsReference = storage.refFromURL(`gs://myimg-1cc76.appspot.com/${this.props.user.username}`);
-
-        // var gsReference = storage.refFromURL('gs://myimg-1cc76.appspot.com/a_warhol/book-photo.jpeg');
-
-
-        this.props.user.img_names.map((img_name, idx) => {
-
-            var gsReference = storage.refFromURL(`gs://myimg-1cc76.appspot.com/${this.props.user.username}/${img_name}`);
-
-
+        this.props.user.images.map((img) => {
+            var gsReference = storage.refFromURL(`gs://myimg-1cc76.appspot.com/${this.props.user.username}/${img.name}`);
             gsReference.getDownloadURL()
                 .then((url) => {
-                    const updatedImages = this.state.images; 
-                    updatedImages.push(url); 
+                    const updatedImages = this.state.images;
+                    updatedImages.push({url: url, name: img.name, dateAdded: img.dateAdded}); 
+                    return updatedImages
+                })
+                .then((updatedImages) => {
                     this.setState({
                         images: updatedImages
                     })
@@ -38,32 +33,10 @@ class Profile extends React.Component {
                     console.log(error)
                 })
         })
-
-        // gsReference.getDownloadURL()
-        //     .then((url) => {
-        //         // `url` is the download URL for 'images/stars.jpg'
-
-        //         // This can be downloaded directly:
-
-        //         // var xhr = new XMLHttpRequest();
-        //         // xhr.responseType = 'blob';
-        //         // xhr.onload = (event) => {
-        //         //     var blob = xhr.response;
-        //         // };
-        //         // xhr.open('GET', url);
-        //         // xhr.send();
-
-        //         this.setState({
-        //             images: [url]
-        //         })
-        //     })
-        //     .catch((error) => {
-        //         console.log(error)
-        //     })
     }
 
+
     render() {
-        console.log(this.state.images)
         return (
             <>
                 <Header {...this.props} user={this.props.user} handleLogout={this.props.handleLogout} />
@@ -77,7 +50,7 @@ class Profile extends React.Component {
                         {
                             this.state.images.map((img, idx) => {
                                 return <div className="image-container" key={idx}>
-                                        <img src={img} />
+                                        <Link to={`/image/${img.name}`}><img src={img.url} /></Link>
                                     </div>
                             })
                         }

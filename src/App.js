@@ -68,6 +68,7 @@ class App extends React.Component {
     //   selectedFile: URL.createObjectURL(event.target.files[0]), 
     // });
     const file = event.target.files[0]; 
+    console.log(file)
     this.setState({
       selectedFile: file
     })
@@ -77,7 +78,8 @@ class App extends React.Component {
   handleUpload = (event) => {
     event.preventDefault(); 
     const file = this.state.selectedFile;
-    const folder = toString(this.state.user.id); 
+    const fileName = file.name;
+    // const folder = toString(this.state.user.id); 
     console.log(this.state.user.username)
     // create a root reference
     var storageRef = firebase.storage().ref();
@@ -88,8 +90,39 @@ class App extends React.Component {
 
     imgRef.put(file)    
       .then(snapshot => {
-        console.log('uploaded')
+        console.log('uploaded'); 
       })
+      .then(() => {
+            // need to push file name to array in this.state.user
+
+        const dateUploaded = new Date(); 
+
+        const newImg = {
+          name: fileName,
+          dateAdded: dateUploaded
+        }; 
+
+        const updatedUser = this.state.user; 
+
+        updatedUser.images.push(newImg); 
+
+        this.setState({
+          user: updatedUser
+          }); 
+      })
+      .then(() => {
+        this.props.history.push(`/profile/${this.state.user.username}`);
+      })
+
+    // need to push file name to array in this.state.user
+
+    // const updatedUser = this.state.user; 
+
+    // updatedUser.img_names.push(fileName); 
+
+    // this.setState({
+    //   user: updatedUser
+    // })
 
     // console.log(this.state.selectedFile)
     // const file = this.state.selectedFile; 
@@ -102,7 +135,7 @@ class App extends React.Component {
     //   images: [...this.state.images, newImg], 
     //   selectedFile: null
     // }); 
-    this.props.history.push(`/profile/${this.state.user.username}`);
+    // this.props.history.push(`/profile/${this.state.user.username}`);
   }
 
   handleDeleteImage = (event) => {
@@ -120,8 +153,7 @@ class App extends React.Component {
   }
 
   render() {
-    // console.log(this.state.selectedFile)
-    // console.log(this.state.images)
+    console.log(this.state.user); 
     return (
       <div className="App">
           <Route 
@@ -138,7 +170,7 @@ class App extends React.Component {
             <Profile {...props} images={this.state.images} user={this.state.user} handleLogout={this.handleLogout} />
           )}/>
           <Route 
-          path="/image/:id"
+          path="/image/:name"
           render={(props) => (
             <Image {...props} images={this.state.images} user={this.state.user} handleLogout={this.handleLogout} />
           )}/>

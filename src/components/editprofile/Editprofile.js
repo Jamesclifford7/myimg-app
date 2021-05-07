@@ -1,35 +1,116 @@
-import React from 'react'
-import Header from '../header/Header'
-import '../editprofile/Editprofile.css'
+import React from 'react';
+import Header from '../header/Header';
+import '../editprofile/Editprofile.css';
+import firebase from 'firebase/app';
 
-function Editprofile(props) {
-    return (
-        <>
-            <Header {...props} user={props.user} handleLogout={props.handleLogout} />
-            <main>
-                <section class="user">
-                    <img src={props.user.profile_img} alt="user icon" /><br/>
-                    <button>change profile pic</button>
-                    <h2>{props.user.username}</h2>
-                    <button>change username</button>
-                </section>
-                <section class="images">
+
+class Editprofile extends React.Component {
+    constructor() {
+        super(); 
+        this.state = {
+            images: []
+        }
+    }
+
+
+    componentDidMount() {
+        var storage = firebase.storage();
+
+        // var gsReference = storage.refFromURL(`gs://myimg-1cc76.appspot.com/${this.props.user.username}`);
+
+        // var gsReference = storage.refFromURL('gs://myimg-1cc76.appspot.com/a_warhol/book-photo.jpeg');
+
+        console.log(this.props.user.img_names)
+
+        this.props.user.images.map((img, idx) => {
+
+            var gsReference = storage.refFromURL(`gs://myimg-1cc76.appspot.com/${this.props.user.username}/${img.name}`);
+
+
+            gsReference.getDownloadURL()
+                .then((url) => {
+                    const updatedImages = this.state.images; 
+                    // updatedImages.push(url); 
+                    updatedImages.push({url: url, name: img.name}); 
+                    this.setState({
+                        images: updatedImages
+                    })
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        })
+    }
+
+    render() {
+        console.log(this.state.images)
+        return (
+            <>
+                <Header {...this.props} user={this.props.user} handleLogout={this.props.handleLogout} />
+                <main>
+                    <section class="user">
+                        <img src={this.props.user.profile_img} alt="user icon" /><br/>
+                        <button>change profile pic</button>
+                        <h2>{this.props.user.username}</h2>
+                        <button>change username</button>
+                    </section>
+                    <section class="images">
                     {
-                        props.images.map((img, idx) => {
-                            return <div class="image-container-delete" key={idx} id={img.id}>
-                                        <img src={img.file}  />
-                                        <button onClick={event => props.handleDeleteImage(event)}>Delete</button>
-                                    </div>
-                        }).reverse()
+                        this.state.images.map((img, idx) => {
+                            return <div className="image-container" key={idx}>
+                                    <img src={img.url} />
+                                </div>
+                        })
                     }
-                </section>
-            </main>
-            <footer>
-                <span>&#169; MyImg 2021</span>
-            </footer>
-        </>
-    )
+
+                        {/* {
+                            props.images.map((img, idx) => {
+                                return <div class="image-container-delete" key={idx} id={img.id}>
+                                            <img src={img.file}  />
+                                            <button onClick={event => props.handleDeleteImage(event)}>Delete</button>
+                                        </div>
+                            }).reverse()
+                        } */}
+                    </section>
+                </main>
+                <footer>
+                    <span>&#169; MyImg 2021</span>
+                </footer>
+            </>
+        )   
+    }
 }
+
+// function Editprofile(props) {
+//     return (
+//         <>
+//             <Header {...props} user={props.user} handleLogout={props.handleLogout} />
+//             <main>
+//                 <section class="user">
+//                     <img src={props.user.profile_img} alt="user icon" /><br/>
+//                     <button>change profile pic</button>
+//                     <h2>{props.user.username}</h2>
+//                     <button>change username</button>
+//                 </section>
+//                 <section class="images">
+
+
+//                     {/* {
+//                         props.images.map((img, idx) => {
+//                             return <div class="image-container-delete" key={idx} id={img.id}>
+//                                         <img src={img.file}  />
+//                                         <button onClick={event => props.handleDeleteImage(event)}>Delete</button>
+//                                     </div>
+//                         }).reverse()
+//                     } */}
+//                 </section>
+//             </main>
+//             <footer>
+//                 <span>&#169; MyImg 2021</span>
+//             </footer>
+//         </>
+//     )
+// }
 
 export default Editprofile
 

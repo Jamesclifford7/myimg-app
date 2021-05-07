@@ -10,3 +10,10 @@
     margin: 20px;
     margin-bottom: 50px;
 }
+
+.upload .load-circle {
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 50px;
+    /* width: 50%; */
+}

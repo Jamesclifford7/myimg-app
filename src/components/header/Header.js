@@ -41,6 +41,11 @@ class Header extends React.Component {
     render() {
         return (
             <header>
+                {
+                    this.props.user
+                    ? <h3><Link to={`/profile/${this.props.user.username}`}>MyImg</Link></h3>
+                    : <h3><Link to='/'>MyImg</Link></h3>
+                }
                 <nav>
                     {
                         this.props.user
@@ -65,7 +70,7 @@ class Header extends React.Component {
                             }
                         </ul>
                         : <ul>
-                            <li>Sign Up</li>
+                            <li><Link to="/signup">Sign Up</Link></li>
                             <li><Link to="/login">Login</Link></li>
                         </ul>
                     }

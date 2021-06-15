@@ -3,7 +3,32 @@
 header {
     border-bottom: solid;
     background-color:antiquewhite;
-    padding: 20px;
+    /* padding: 15px; */
+    padding-top: 30px;
+    padding-bottom: 30px;
+    height: 20px;
+    position: relative; 
+}
+
+header h3 {
+    display: inline-block;
+    text-align: initial;
+    margin: 0;
+    margin-left: 35px;
+    /* padding-top: 30px; */
+    /* border: solid; */
+    /* padding: 5px; */
+    position: absolute; 
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+header nav {
+    text-align: initial;
+    display: inline-block;
+    width: 100%;
+    /* border: solid; */
+    margin: 0 auto;
 }
 
 header nav ul {
@@ -11,6 +36,8 @@ header nav ul {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    /* border: solid; */
+    /* width: 50%; */
     /* position: relative; */
 }
 
@@ -35,14 +62,26 @@ header nav ul .dropdown .dropdown-container {
     text-align: left;
 }
 
-
-
 header nav ul .dropdown .dropdown-container button {
     display: block;
     margin-top: 20px;
     margin-left: 10px;
 }
 
+header nav ul li button {
+    /* border: solid; */
+    padding: 0;
+    background-color: initial;
+    /* border: solid; */
+    outline: inherit;
+    border: none;
+    color: inherit;
+
+}
+
 header nav ul li img {
     height: 25px;
+    margin: 0;
+    /* border: solid; */
+    display: inline;
 }

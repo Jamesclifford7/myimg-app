@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../header/Header'
-import '../login/Login.css'
+import './Login.css'
 
 function Login(props) {
     return (

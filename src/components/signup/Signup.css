@@ -1,19 +1,19 @@
-/* Login Form */
+/* Sign Up Form */
 
-.login {
+.signup {
     text-align: center;
     padding-top: 50px;
     padding-bottom: 400px;
 }
 
-.login .form-container {
+.signup-form-container {
     border: solid;
     width: 50%;
     margin: 0 auto;
     padding-bottom: 100px;
 }
 
-.login .form-container form .input-container {
+.signup .signup-form-container form .signup-input-container {
     /* border: solid; */
     text-align: right;
     width: 50%;
@@ -21,14 +21,14 @@
     margin-right: 200px;
 }
 
-.login .form-container label {
+.signup .signup-form-container label {
     margin-right: 8px;
 }
 
-.login .form-container button {
+.signup .signup-form-container button {
     margin-top: 30px;
 }
 
-.login .form-container input, .login .form-container label {
+.signup .signup-form-container input, .signup .signup-form-container label {
     margin-top: 10px;
 }

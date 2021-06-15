@@ -1,5 +1,3 @@
-import icon from './images/user-icon.png'
-
 // Date format: Fri Apr 30 2021 14:22:27 GMT-0700 (Pacific Daylight Time)
 
 const user = {
@@ -8,7 +6,7 @@ const user = {
     name: "Andy Warhol", 
     username: "a_warhol", 
     password: "Warholandy1", 
-    profile_img: icon, 
+    profile_img: 'user-icon.png', 
     images: [
         {
             name: "book-photo.jpeg",
@@ -39,7 +37,6 @@ const user = {
             dateAdded: "Fri Apr 23 07:00:00 GMT-0700 (Pacific Daylight Time)"
         }
     ]
-    // img_names: ["book-photo.jpeg", "man-in-field.jpeg", "mobile-phone.png", "northern-lights.jpeg", "raindrops-on-leaves.jpeg", "the-golden-gate-bridge-sunset-1080x720.jpeg", "sX (5).jpg"]
 }
 
 export default user;

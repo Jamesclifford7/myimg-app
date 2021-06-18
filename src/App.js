@@ -33,7 +33,8 @@ class App extends React.Component {
     super(); 
     this.state = {
       user: {}, 
-      selectedFile: null
+      selectedFile: null, 
+      selectedProfileFile: null
     }
   }
 
@@ -82,7 +83,8 @@ class App extends React.Component {
     event.preventDefault(); 
     this.setState({
       user: {}, 
-      selectedFile: null
+      selectedFile: null, 
+      selectedProfileFile: null
     }); 
     this.props.history.push('/')
   }
@@ -154,6 +156,13 @@ class App extends React.Component {
       selectedFile: file
     })
   }
+
+  onChangeHandlerProfile = (event) => {
+    const file = event.target.files[0];
+    this.setState({
+      selectedProfileFile: file
+    }); 
+  }
   
   // upload handler
   handleUpload = (event) => {
@@ -163,15 +172,14 @@ class App extends React.Component {
     console.log(file, fileName); 
     
     // create a root reference
-    var storageRef = firebase.storage().ref();
+    const storageRef = firebase.storage().ref();
 
     // create a reference to the image
 
-    var imgRef = storageRef.child(`${this.state.user.username}/${fileName}`); 
-
+    const imgRef = storageRef.child(`${this.state.user.username}/${fileName}`); 
 
     const updatedImages = this.state.user.images; 
-    console.log(updatedImages)
+
     const newImg = {
       name: fileName, 
       date: new Date()
@@ -214,7 +222,6 @@ class App extends React.Component {
           return res.json()
         })
         .then(resJson => {
-          console.log(resJson); 
           this.setState({
             user: resJson[0]
           }); 
@@ -232,6 +239,68 @@ class App extends React.Component {
       .catch(error => {
         console.log(error + "firebase error")
       })
+  }
+
+  handleChangeProfilePic = (event) => {
+    event.preventDefault();
+    const file = this.state.selectedProfileFile; 
+    const fileName = file.name; 
+
+    // upload file to firebase, then PATCH request with updated user info
+
+    // create a root reference
+    const storageRef = firebase.storage().ref();
+
+    // create a reference to the image
+    const imgRef = storageRef.child(`${this.state.user.username}/${fileName}`); 
+
+    const updatedUser = {
+      id: this.state.user.id, 
+      email: this.state.user.email, 
+      username: this.state.user.username, 
+      password: this.state.user.password, 
+      profile_img: fileName, 
+      images: this.state.user.images
+    }; 
+
+    imgRef.put(file)    
+      .then(snapshot => {
+        // uploading to firebase
+        console.log('uploaded new profile picture'); 
+      })
+      .then(() => {
+        fetch(`http://localhost:8000/api/users/${this.state.user.id}`, {
+          method: 'PATCH', 
+          body: JSON.stringify(updatedUser), 
+          headers: {
+            'content-type': 'application/json'
+          }
+        })
+        .then(res => {
+          if(!res.ok) {
+            throw new Error()
+          }
+          return res.json()
+        })
+        .then(resJson => {
+          const updatedUser = resJson[0]
+          this.setState({
+            user: updatedUser
+          }); 
+        })
+        .catch(error => {
+          console.log(error + 'profile picture PATCH request error')
+        })
+      })
+      .then(() => {
+        this.setState({
+          selectedProfileFile: null
+        }); 
+        this.props.history.push(`/profile/${this.state.user.username}`);
+      })
+      .catch(error => {
+        console.log(error + 'error uploading profile picture to firebase')
+      }); 
   }
 
   handleDeleteImage = (event) => {
@@ -336,7 +405,7 @@ class App extends React.Component {
           <Route 
           path="/editprofile"
           render={(props) => (
-            <Editprofile {...props} images={this.state.images} user={this.state.user} handleLogout={this.handleLogout} handleDeleteImage={this.handleDeleteImage} />
+            <Editprofile {...props} onChangeHandlerProfile={this.onChangeHandlerProfile} handleChangeProfilePic={this.handleChangeProfilePic} images={this.state.images} user={this.state.user} handleLogout={this.handleLogout} handleDeleteImage={this.handleDeleteImage} />
           )}/>
           <Route 
           path="/upload"

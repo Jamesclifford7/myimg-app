@@ -59,17 +59,22 @@ class Editprofile extends React.Component {
             <>
                 <Header {...this.props} user={this.props.user} handleLogout={this.props.handleLogout} />
                 <main>
-                    <section class="user">
-                        {/* <img src={this.state.profileImg} alt="user icon" /><br/> */}
-                        <img src={icon} alt="user icon" /><br />
-                        <button>change profile pic</button>
+                    <section className="user">
+                        {
+                            this.props.user.profile_img === "user-icon.png"
+                            ? <img src={icon} alt="user icon" />
+                            : <img src={this.state.profileImg} alt="user icon" />
+                        }
+                        <input type="file" name="file" onChange={e => this.props.onChangeHandlerProfile(e)} />
+                        <button onClick={e => this.props.handleChangeProfilePic(e)}>Change Profile Image</button>
+                        {/* <button>change profile pic</button> */}
                         <h2>{this.props.user.username}</h2>
-                        <button>change username</button>
+                        {/* <button>change username</button> */}
                     </section>
-                    <section class="images">
+                    <section className="images">
                     {
                         this.state.images.map((img, idx) => {
-                            return <div className="image-container" key={idx} name={img.name}>
+                            return <div className="image-container-edit" key={idx} name={img.name}>
                                     <img src={img.url} />
                                     <button onClick={event => this.props.handleDeleteImage(event)}>Delete</button>
                                 </div>
@@ -84,36 +89,5 @@ class Editprofile extends React.Component {
         )   
     }
 }
-
-// function Editprofile(props) {
-//     return (
-//         <>
-//             <Header {...props} user={props.user} handleLogout={props.handleLogout} />
-//             <main>
-//                 <section class="user">
-//                     <img src={props.user.profile_img} alt="user icon" /><br/>
-//                     <button>change profile pic</button>
-//                     <h2>{props.user.username}</h2>
-//                     <button>change username</button>
-//                 </section>
-//                 <section class="images">
-
-
-//                     {/* {
-//                         props.images.map((img, idx) => {
-//                             return <div class="image-container-delete" key={idx} id={img.id}>
-//                                         <img src={img.file}  />
-//                                         <button onClick={event => props.handleDeleteImage(event)}>Delete</button>
-//                                     </div>
-//                         }).reverse()
-//                     } */}
-//                 </section>
-//             </main>
-//             <footer>
-//                 <span>&#169; MyImg 2021</span>
-//             </footer>
-//         </>
-//     )
-// }
 
 export default Editprofile

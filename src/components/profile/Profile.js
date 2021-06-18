@@ -16,7 +16,7 @@ class Profile extends React.Component {
     }; 
 
     componentDidMount() {
-        var storage = firebase.storage(); 
+        const storage = firebase.storage(); 
 
         // retrieving user images
         this.props.user.images.map((img) => {
@@ -36,21 +36,40 @@ class Profile extends React.Component {
                 .catch((error) => {
                     console.log(error)
                 })
-        })
+        }); 
 
-        // retrieving user profile img
+        // retrieving user profile img for regular login
         const gsReference2 = storage.refFromURL(`gs://myimg-1cc76.appspot.com/${this.props.user.username}/${this.props.user.profile_img}`);
         gsReference2.getDownloadURL()
             .then((url) => {
                 this.setState({
                     profileImg: url
-                })
+                }); 
             })
             .catch((error) => {
                 console.log(error)
-            })
+            }); 
+
     }; 
 
+    componentDidUpdate(prevProps) {
+        // retrieving user profile img for updated profile img
+
+        if (prevProps.user.profile_img !== this.props.user.profile_img) {
+            const storage = firebase.storage(); 
+
+            const gsReference2 = storage.refFromURL(`gs://myimg-1cc76.appspot.com/${this.props.user.username}/${this.props.user.profile_img}`);
+            gsReference2.getDownloadURL()
+                .then((url) => {
+                    this.setState({
+                        profileImg: url
+                    }); 
+                })
+                .catch((error) => {
+                    console.log(error)
+                }); 
+        }
+    }; 
 
     render() {
         return (
@@ -59,7 +78,12 @@ class Profile extends React.Component {
                 <main>
                     <section className="user">
                         {/* <img src={this.state.profileImg} alt="user icon" /> */}
-                        <img src={icon} alt="user icon" />
+                        {
+                            this.props.user.profile_img === "user-icon.png"
+                            ? <img src={icon} alt="user icon" />
+                            : <img src={this.state.profileImg} alt="user icon" />
+                        }
+                        {/* <img src={icon} alt="user icon" /> */}
                         <h2>{this.props.user.username}</h2>
                     </section>
                     <section className="images">

@@ -14,18 +14,18 @@
     flex-wrap: wrap;
 }
 
-.images .image-container-delete {
+.images .image-container-edit {
     margin-bottom: 10px;
     /* position: relative; */
 }
 
-.images .image-container-delete img {
+.images .image-container-edit img {
     height: 300px;
     width: 300px;
     /* margin: 20px; */
 }
 
-.images .image-container button {
+.images .image-container-edit button {
     display: block;
     /* position: absolute; */
     /* margin: 10px; */

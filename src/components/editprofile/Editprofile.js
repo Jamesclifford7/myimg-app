@@ -62,8 +62,8 @@ class Editprofile extends React.Component {
                     <section className="user">
                         {
                             this.props.user.profile_img === "user-icon.png"
-                            ? <img src={icon} alt="user icon" />
-                            : <img src={this.state.profileImg} alt="user icon" />
+                            ? <><img src={icon} alt="user icon" /><br/></>
+                            : <><img src={this.state.profileImg} alt="user icon" /><br/></>
                         }
                         <input type="file" name="file" onChange={e => this.props.onChangeHandlerProfile(e)} />
                         <button onClick={e => this.props.handleChangeProfilePic(e)}>Change Profile Image</button>

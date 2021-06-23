@@ -8,11 +8,8 @@ import Profile from './components/profile/Profile';
 import Image from './components/image/Image';
 import Editprofile from './components/editprofile/Editprofile';
 import Upload from './components/upload/Upload';
-// import user from './user';
-// import user_images from './user_images'; 
 import firebase from "firebase/app";
 import 'firebase/storage'; 
-// import icon from './images/user-icon.png';
 
 var config = {
   apiKey: "AIzaSyAN595HmOigQEoVtvo-_Fwb8tHkA_sACXE",
@@ -44,7 +41,7 @@ class App extends React.Component {
     const input = event.target.input.value; 
     const password = event.target.password.value;
 
-    fetch('http://localhost:8000/api/login', {
+    fetch('https://myimg-db.herokuapp.com/api/login', {
       method: 'GET', 
       headers: {
         'content-type': 'application/json', 
@@ -121,7 +118,7 @@ class App extends React.Component {
       password: password
     }; 
 
-    fetch('http://localhost:8000/api/users/', {
+    fetch('https://myimg-db.herokuapp.com/api/users', {
       method: 'POST', 
       body: JSON.stringify(newUser),
       headers: {
@@ -208,7 +205,8 @@ class App extends React.Component {
 
         // retrieve current user information via state
         // update that user via PATCH request
-        fetch(`http://localhost:8000/api/users/${this.state.user.id}`, {
+
+        fetch(`https://myimg-db.herokuapp.com/api/users/${this.state.user.id}`, {
           method: 'PATCH', 
           body: JSON.stringify(updatedUser), 
           headers: {
@@ -269,7 +267,7 @@ class App extends React.Component {
         console.log('uploaded new profile picture'); 
       })
       .then(() => {
-        fetch(`http://localhost:8000/api/users/${this.state.user.id}`, {
+        fetch(`https://myimg-db.herokuapp.com/api/users/${this.state.user.id}`, {
           method: 'PATCH', 
           body: JSON.stringify(updatedUser), 
           headers: {
@@ -345,7 +343,7 @@ class App extends React.Component {
     })
     .then(() => {
       // PATCH request where we remove the image from the user.images array
-      fetch(`http://localhost:8000/api/users/${this.state.user.id}`, {
+      fetch(`https://myimg-db.herokuapp.com/api/users/${this.state.user.id}`, {
         method: 'PATCH', 
         body: JSON.stringify(updatedUser), 
         headers: {

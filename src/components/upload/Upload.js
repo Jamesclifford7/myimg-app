@@ -23,9 +23,9 @@ class Upload extends React.Component {
             <>
                 <Header {...this.props} user={this.props.user} handleLogout={event => this.props.handleLogout(event)} />
                 <main>
-                    <section class="upload">
+                    <section className="upload">
                         <h1>Upload New Image</h1>
-                        <img src="https://image.flaticon.com/icons/png/512/23/23714.png" /><br/>
+                        <img src="https://image.flaticon.com/icons/png/512/23/23714.png" alt="upload icon" /><br/>
                             <input type="file" name="file" onChange={this.props.onChangeHandler} />
                             <button onClick={(e) => {this.props.handleUpload(e); this.changeLoad(e)}}>Upload</button>
                         {

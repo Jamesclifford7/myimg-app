@@ -8,6 +8,14 @@
     height: 200px; 
 }
 
+.user .load-circle {
+    /* text-align: center; 
+    border: solid;
+    width: 100%; */
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
 .images {
     display: flex;
     justify-content: space-around;

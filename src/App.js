@@ -22,6 +22,7 @@ var config = {
 };
 // Initialize Firebase
 firebase.initializeApp(config);
+
 // var storage = firebase.storage(); 
 // firebase.analytics();
 
@@ -242,7 +243,12 @@ class App extends React.Component {
   handleChangeProfilePic = (event) => {
     event.preventDefault();
     const file = this.state.selectedProfileFile; 
+    if(file === null) {
+      return null
+    }; 
     const fileName = file.name; 
+
+    // need to delete prev profile pic from firebase?
 
     // upload file to firebase, then PATCH request with updated user info
 
@@ -308,7 +314,7 @@ class App extends React.Component {
     const userName = this.state.user.username;
     // console.log(imgName, userName); 
 
-    var storageRef = firebase.storage().ref();
+    const storageRef = firebase.storage().ref();
 
     const imageRef = storageRef.child(`${userName}/${imgName}`); 
 
@@ -403,7 +409,7 @@ class App extends React.Component {
           <Route 
           path="/editprofile"
           render={(props) => (
-            <Editprofile {...props} onChangeHandlerProfile={this.onChangeHandlerProfile} handleChangeProfilePic={this.handleChangeProfilePic} images={this.state.images} user={this.state.user} handleLogout={this.handleLogout} handleDeleteImage={this.handleDeleteImage} />
+            <Editprofile {...props} selectedProfileFile={this.state.selectedProfileFile} onChangeHandlerProfile={this.onChangeHandlerProfile} handleChangeProfilePic={this.handleChangeProfilePic} images={this.state.images} user={this.state.user} handleLogout={this.handleLogout} handleDeleteImage={this.handleDeleteImage} />
           )}/>
           <Route 
           path="/upload"

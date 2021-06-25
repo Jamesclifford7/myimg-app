@@ -19,24 +19,32 @@ class Profile extends React.Component {
         const storage = firebase.storage(); 
 
         // retrieving user images
+
         this.props.user.images.map((img) => {
             const gsReference = storage.refFromURL(`gs://myimg-1cc76.appspot.com/${this.props.user.username}/${img.name}`);
             
-            gsReference.getDownloadURL()
+            return gsReference.getDownloadURL()
                 .then((url) => {
                     const updatedImages = this.state.images;
-                    updatedImages.push({url: url, name: img.name, dateAdded: img.dateAdded}); 
+                    updatedImages.push({url: url, name: img.name, date: img.date}); 
                     return updatedImages
                 })
                 .then((updatedImages) => {
+                    const sortedImages = updatedImages.sort((a, b) => {
+                        return new Date(a.date) - new Date(b.date); 
+                    }); 
                     this.setState({
-                        images: updatedImages
-                    })
+                        images: sortedImages
+                    }); 
                 })
                 .catch((error) => {
                     console.log(error)
                 })
-        }); 
+        })
+
+
+
+        // console.log(sortedImages)
 
         // retrieving user profile img for regular login
         const gsReference2 = storage.refFromURL(`gs://myimg-1cc76.appspot.com/${this.props.user.username}/${this.props.user.profile_img}`);
@@ -77,22 +85,22 @@ class Profile extends React.Component {
                 <Header {...this.props} user={this.props.user} handleLogout={this.props.handleLogout} />
                 <main>
                     <section className="user">
-                        {/* <img src={this.state.profileImg} alt="user icon" /> */}
                         {
                             this.props.user.profile_img === "user-icon.png"
                             ? <img src={icon} alt="user icon" />
                             : <img src={this.state.profileImg} alt="user icon" />
                         }
-                        {/* <img src={icon} alt="user icon" /> */}
                         <h2>{this.props.user.username}</h2>
                     </section>
                     <section className="images">
                         {
-                            this.state.images.map((img, idx) => {
+                            this.state.images.length === 0
+                            ? <p>There's nothing here! Click on the menu and navigate to the upload page to start adding images.</p>
+                            : this.state.images.map((img, idx) => {
                                 return <div className="image-container" key={idx}>
-                                        <Link to={`/image/${img.name}`}><img src={img.url} /></Link>
+                                        <Link to={`/image/${img.name}`}><img src={img.url} alt="user upload" /></Link>
                                     </div>
-                            })
+                            }).reverse()
                         }
                     </section>
                 </main>

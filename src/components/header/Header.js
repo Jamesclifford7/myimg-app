@@ -50,7 +50,7 @@ class Header extends React.Component {
                     {
                         this.props.user
                         ? <ul>
-                            <li><button onClick={event => this.toggleMenu(event)}><img src="https://cdn3.iconfinder.com/data/icons/mini-icon-set-general-office/91/General_-_Office_30-512.png" /></button></li>
+                            <li><button onClick={event => this.toggleMenu(event)}><img src="https://cdn3.iconfinder.com/data/icons/mini-icon-set-general-office/91/General_-_Office_30-512.png" alt="menu bars" /></button></li>
                             {
                                 this.state.showMenu
                                 ? <li className="dropdown">
@@ -82,11 +82,4 @@ class Header extends React.Component {
 
 export default Header
 
-{/* <header>
-    <nav>
-        <ul>
-            <li>Sign Up</li>
-            <li><Link to="/login">Login</Link></li>
-        </ul>
-    </nav>
-</header>  */}
+

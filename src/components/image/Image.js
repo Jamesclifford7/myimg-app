@@ -18,14 +18,12 @@ class Image extends React.Component {
 
         // var gsReference = storage.refFromURL('gs://myimg-1cc76.appspot.com/a_warhol/book-photo.jpeg');
 
-        console.log(this.props.user.img_names)
-
         this.props.user.images.map((img, idx) => {
 
             var gsReference = storage.refFromURL(`gs://myimg-1cc76.appspot.com/${this.props.user.username}/${img.name}`);
 
 
-            gsReference.getDownloadURL()
+            return gsReference.getDownloadURL()
                 .then((url) => {
                     const updatedImages = this.state.images; 
                     // updatedImages.push(url); 
@@ -41,7 +39,6 @@ class Image extends React.Component {
     }
 
     render() {
-        console.log(this.state.images, this.props.match.params.name)
         return (
             <>
                 <Header user={this.props.user} handleLogout={event => this.props.handleLogout(event)}/>
@@ -49,12 +46,14 @@ class Image extends React.Component {
                     <section class="image">
                         <button onClick={event => this.props.history.goBack(event)}>Back</button><br/>
                         {
-                            this.state.images.map(img => {
+                            this.state.images.map((img, idx) => {
                                 // return console.log(img.img_name === this.props.match.params.name)
 
-                                if (img.name == this.props.match.params.name) {
-                                    return <img src={img.url} />
-                                } 
+                                if (img.name === this.props.match.params.name) {
+                                    return <img src={img.url} alt="user upload" key={idx} />
+                                } else {
+                                    return null
+                                }
 
                             })   
                         }
